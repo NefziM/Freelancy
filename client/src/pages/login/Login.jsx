@@ -53,7 +53,7 @@ function Login() {
         />
         <button type="submit">Login</button>
         {error && <div className="error">{error}</div>}
-        <Link to="/forgot-password" className="forgot-password-link">
+        <Link to="/successP/:token" className="forgot-password-link">
           Mot de passe oublié?
         </Link>
       </form>

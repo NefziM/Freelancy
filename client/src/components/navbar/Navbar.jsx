@@ -56,7 +56,7 @@ function Navbar() {
                 <div className="options">
                   {currentUser.isSeller && (
                     <>
-                      <Link className="link" to="/mygigs">
+                      <Link className="link" to={`/mygigs/${currentUser._id}`}>
                         Services
                       </Link>
                       <Link className="link" to="/add">
@@ -64,11 +64,14 @@ function Navbar() {
                       </Link>
                     </>
                   )}
-                  <Link className="link" to="/orders">
+                  <Link className="link" to={`/orders/${currentUser._id}`}>
                     Orders
                   </Link>
                   <Link className="link" to="/messages">
                     Messages
+                  </Link>
+                  <Link className="link" to={`/profile/${currentUser._id}`}>
+                    Profile
                   </Link>
                   <Link className="link" onClick={handleLogout}>
                     Logout

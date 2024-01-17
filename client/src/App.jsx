@@ -12,6 +12,7 @@ import MyGigs from "./pages/myGigs/MyGigs";
 import Register from "./pages/register/Register";
 import Pay from "./pages/pay/Pay";
 import Success from "./pages/success/Success";
+import OrderVerification from './pages/OrderVerification/OrderVerification';
 import "./app.scss";
 import Login from './pages/login/Login';
 import {
@@ -23,6 +24,11 @@ import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query';
+import EditService from './pages/editService/EditService';
+import DetailService from './pages/detailService/DetailService';
+import Profile from './pages/profile/Profile';
+import ForgotPasswordForm from './pages/ForgotPasswordForm/ForgotPasswordForm';
+import ResetPasswordForm from './pages/ResetPasswordForm/ResetPasswordForm';
 
 function App() {
   const queryClient = new QueryClient();
@@ -57,7 +63,11 @@ function App() {
           element:<Gig />
         },
         {
-          path:"/orders",
+          path:"/OrderVerification/:id",
+          element:<OrderVerification />
+        },
+        {
+          path:"/orders/:userId",
           element:<Orders />
         },
         {
@@ -69,12 +79,25 @@ function App() {
           element: <Login />,
         },
         {
-          path:"/mygigs",
-          element:<MyGigs />
+          
+          path: "/mygigs/:userId",
+          element: <MyGigs />
         },
         {
           path:"/add",
           element:<Add />
+        },
+        {
+          path: "/details/:id",
+          element: <DetailService />,
+        },
+        {
+          path: "/profile/:userId", // Use the correct path parameter for user ID
+          element: <Profile />,
+        },
+        {
+          path: "/edit/:id",
+          element: <EditService />,
         },
         {
           path:"/messages",
@@ -91,6 +114,14 @@ function App() {
         {
           path:"/success/:id",
           element:<Success />
+        },
+        {
+          path:"/successP/:id",
+          element:<ForgotPasswordForm />
+        },
+        {
+          path:"/forgot-password",
+          element:<ResetPasswordForm />
         },
       ]
     },

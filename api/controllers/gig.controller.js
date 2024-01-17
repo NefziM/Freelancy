@@ -18,6 +18,8 @@ export const createGig = async (req, res, next) => {
   }
 };
 
+
+
 export const deleteGig = async (req, res, next) => {
   try {
     const gig = await Gig.findById(req.params.id);
@@ -53,7 +55,7 @@ export const getGigs = async (req, res, next) => {
     ...(q.search && { title: { $regex: q.search, $options: "i" } }),
   };
 
-  const sortOption = q.sort || "createdAt"; // Défaut à "createdAt" si le paramètre de tri n'est pas défini
+  const sortOption = q.sort || "createdAt";
 
   try {
     const gigs = await Gig.find(filters).sort({ [sortOption]: -1 });
@@ -62,3 +64,39 @@ export const getGigs = async (req, res, next) => {
     next(err);
   }
 };
+// gig.controller.js
+
+export const getGigsUser = async (req, res, next) => {
+  const userId = req.params.userId; // Récupérer l'userId depuis les paramètres de la requête
+  const filters = {
+    ...(userId && { userId: userId }),
+  };
+
+  try {
+    const gigs = await Gig.find(filters);
+    res.status(200).send(gigs);
+  } catch (err) {
+    next(err);
+  }
+};
+
+// gig.controller.js
+
+export const updateGig = async (req, res, next) => {
+  try {
+    const gig = await Gig.findById(req.params.id);
+    if (!gig) return next(createError(404, "Gig not found!"));
+
+    if (gig.userId !== req.userId)
+      return next(createError(403, "You can update only your gig!"));
+
+    Object.assign(gig, req.body);
+
+    const updatedGig = await gig.save();
+    res.status(200).json(updatedGig);
+  } catch (err) {
+    next(err);
+  }
+};
+
+

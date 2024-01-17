@@ -4,6 +4,13 @@ import { Link } from "react-router-dom";
 import newRequest from "../../utils/newRequest";
 import "./Messages.scss";
 import moment from "moment";
+const getUserQuery = (userId) => {
+  return useQuery({
+    queryKey: ["user", userId],
+    queryFn: () =>
+      newRequest.get(`/users/${userId}`).then((res) => res.data),
+  });
+};
 
 const Messages = () => {
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
@@ -58,7 +65,13 @@ const Messages = () => {
                 }
                 key={c.id}
               >
-                <td>{currentUser.isSeller ? c.buyerId : c.sellerId}</td>
+                <td>
+                    {currentUser.isSeller ? (
+                      c.buyerId === currentUser._id ? "You" : getUserQuery(c.buyerId).data?.username
+                    ) : (
+                      c.sellerId === currentUser._id ? "You" : getUserQuery(c.sellerId).data?.username
+                    )}
+                  </td>
                 <td>
                   <Link to={`/message/${c.id}`} className="link">
                     {c?.lastMessage?.substring(0, 100)}...

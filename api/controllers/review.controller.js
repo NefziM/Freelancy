@@ -8,14 +8,14 @@ export const createReview = async (req, res, next) => {
   }
 
   // Vérification si l'utilisateur a déjà créé un avis
-  const existingReview = await Review.findOne({
+ /* const existingReview = await Review.findOne({
     gigId: req.body.gigId,
     userId: req.userId,
   });
 
   if (existingReview) {
     return next(createError(403, "You have already created a review for this service!"));
-  }
+  }*/
 
   const newReview = new Review({
     userId: req.userId,

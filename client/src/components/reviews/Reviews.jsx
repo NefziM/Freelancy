@@ -37,13 +37,13 @@ const Reviews = ({ gigId }) => {
       return;
     }
   
-    // Vérification si l'utilisateur a déjà créé un avis
+   /* // Vérification si l'utilisateur a déjà créé un avis
     const userReview = data.find((review) => review.userId === getCurrentUser()._id);
   
     if (userReview) {
       alert("You have already created a review for this service !");
       return;
-    }
+    }*/
   
     mutation.mutate({ gigId, desc, star });
   };

@@ -55,9 +55,14 @@
             color: white;
             font-weight: 500;
             font-size: 18px;
-            background-color: #1dbf73;
+            background-color: #3d6fd3;
             cursor: pointer;
-          }
+            transition: background-color 0.3s; /* Adding transition effect */
+
+            &:hover {
+                background-color: #0c2a67; /* Change background color on hover */
+            }
+        }
   
           .add{
             display: flex;
@@ -77,8 +82,8 @@
               font-size: 12px;
               font-weight: 400;
               background: transparent;
-              color: red;
-              border: 1px solid red;
+              color: rgb(180, 29, 29);
+              border: 1px solid rgb(172, 27, 27);
               display: flex;
               align-items: center;
               gap: 20px;

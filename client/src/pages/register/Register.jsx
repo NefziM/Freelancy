@@ -36,13 +36,30 @@ function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     // Validation pour s'assurer que le mot de passe et la confirmation correspondent
     if (user.password !== user.confirmPassword) {
       setPasswordError("Password and Confirm Password do not match");
       return; // Arrêtez le traitement si les mots de passe ne correspondent pas
     }
-
+  
+    // Ajout de validation pour le numéro de téléphone
+    if (user.phone.trim().length !== 8 || !/^\d+$/.test(user.phone)) {
+      setPasswordError("Phone number must be 8 digits long and contain only numbers");
+      return; // Arrêtez le traitement si le numéro de téléphone n'est pas valide
+    }
+  
+    // Vérification des champs obligatoires
+    const requiredFields = ["username", "email", "password", "confirmPassword", "phone", "desc"];
+    for (const field of requiredFields) {
+      if (!user[field].trim()) {
+        setPasswordError(`${field.charAt(0).toUpperCase() + field.slice(1)} is required`);
+        return; // Arrêtez le traitement si un champ obligatoire est vide
+      }
+    }
+  
+    // Continuer avec le traitement si toutes les validations passent
+  
     const url = await upload(file);
     try {
       await newRequest.post("/auth/register", {

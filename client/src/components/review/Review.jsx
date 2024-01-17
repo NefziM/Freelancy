@@ -25,13 +25,15 @@ const Review = ({ review, onUpdateReview }) => {
   const deleteMutation = useMutation({
     mutationFn: async () => {
       try {
-        console.log("Avant deleteMutation.mutateAsync()");
         const response = await newRequest.delete(`/reviews/${review._id}`);
-        console.log("Après deleteMutation.mutateAsync()", response);
         return response;
       } catch (error) {
-        console.error("Erreur dans deleteMutation.mutateAsync()", error);
-        throw error;
+        if (error.response && error.response.status === 403) {
+          // Handle 403 error, e.g., show a message or redirect the user
+          console.error('Permission denied: You do not have the necessary permissions.');
+        } else {
+          throw error;
+        }
       }
     },
     onSuccess: () => {
@@ -114,6 +116,7 @@ const Review = ({ review, onUpdateReview }) => {
             <span>{data.username}</span>
             <div className="country">
               <span>{data.country}</span>
+              <span>{review.date}</span>
             </div>
           </div>
         </div>
@@ -127,6 +130,7 @@ const Review = ({ review, onUpdateReview }) => {
           ))}
         <span>{review.star}</span>
       </div>
+     
 
       {isEditing ? (
         <>
